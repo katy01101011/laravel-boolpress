@@ -13,7 +13,7 @@
                     {{-- <img src="..." class="card-img-top" alt="..."> --}}
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
-                        <a href="#" class="btn btn-primary">Leggi post</a>
+                        <a href="{{ route('adminposts.show', ['post' => $post->id]) }}" class="btn btn-primary">Leggi post</a>
                     </div>
                 </div>
             </div>
