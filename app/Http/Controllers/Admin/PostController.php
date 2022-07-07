@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -37,7 +38,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validationRules());
+
+        $data = $request->all();
+        $post = new Post();
+        $post->fill($data);
+        // Genero slug
+        $post->slug = $this->generateSlug($post->title);
+        $post->save();
+
+        return redirect()->route('adminposts.show', ['post' => $post->id]);
     }
 
     /**
@@ -84,5 +94,26 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function generateSlug($title) {
+        // Creo slug unico
+        $base_slug = Str::slug($title, '-');
+        $slug = $base_slug;
+        $count = 1;
+        $post_found = Post::where('slug', '=', $slug)->first();
+        while($post_found) {
+            $slug = $base_slug . '-' . $count;
+            $post_found = Post::where('slug', '=', $slug)->first();
+            $count++;
+        }
+        return $slug;
+    }
+
+    private function validationRules() {
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required|max:30000',
+        ];
     }
 }
