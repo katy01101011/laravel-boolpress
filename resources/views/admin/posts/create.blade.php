@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <form action="{{ route('adminposts.store') }}" method="POST">
+    <form action="{{ route('admin.posts.store') }}" method="POST">
         @method('POST')
         @csrf
         <h1>Crea un nuovo post</h1>

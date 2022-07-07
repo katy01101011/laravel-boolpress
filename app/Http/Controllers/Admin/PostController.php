@@ -47,7 +47,7 @@ class PostController extends Controller
         $post->slug = $this->generateSlug($post->title);
         $post->save();
 
-        return redirect()->route('adminposts.show', ['post' => $post->id]);
+        return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -90,7 +90,7 @@ class PostController extends Controller
         $post->slug = $this->generateSlug($post->title);
         $post->save();
 
-        return redirect()->route('adminposts.show', ['post' => $post->id]);
+        return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
     /**
