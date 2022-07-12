@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -29,8 +30,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -40,7 +42,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         $request->validate($this->validationRules());
 
         $data = $request->all();
@@ -49,6 +51,10 @@ class PostController extends Controller
         // Genero slug
         $post->slug = Post::generateSlug($post->title);
         $post->save();
+
+        if (isset($data['tags'])) {
+            $post->tags()->sync($data['optionals']);
+        }
 
         return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
@@ -118,7 +124,9 @@ class PostController extends Controller
         return [
             'title' => 'required|max:255',
             'content' => 'required|max:30000',
-            // 'category_id' => 'nullable|exists:categories.id',
+            'category_id' => 'nullable|exists:categories.id',
+            // 'tags' => 'nullable|exists:tags.id', // ERROR: InvalidArgumentException - Database connection [tags] not configured.
         ];
     }
 }
+?>

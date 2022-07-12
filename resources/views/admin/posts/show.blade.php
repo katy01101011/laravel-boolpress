@@ -10,6 +10,19 @@
     <p>
         <strong>Categoria:</strong> {{ $category ? $category->name : 'nessuna' }}
     </p>
+    {{-- Tags --}}
+    @if ($post->tags->isNotEmpty())
+        <h4>
+            Tags:
+        </h4>
+    @endif
+    <ul>
+        @foreach ($post->tags as $tag)
+            <li>
+                {{ $tag->name }}
+            </li>
+        @endforeach
+    </ul>
     <p>
         {{ $post->content }}
     </p>

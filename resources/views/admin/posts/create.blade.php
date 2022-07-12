@@ -26,9 +26,23 @@
             <select class="form-control" id="category_id" name="category_id">
                 <option value="">Nessuna</option>
                 @foreach ($categories as $category)
-                    <option value="{{$category->id}}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div>
+            @if ($tags->isNotEmpty())
+                <h4>Tags</h4>
+            @endif
+            @foreach ($tags as $tag)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                        id="tag-{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                    <label for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                </div>
+            @endforeach
         </div>
 
         <div class="mb-3">
