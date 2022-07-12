@@ -5,7 +5,10 @@
         {{ $post->title }}
     </h1>
     <p>
-        Slug: {{ $post->slug }}
+        <strong>Slug:</strong> {{ $post->slug }}
+    </p>
+    <p>
+        <strong>Categoria:</strong> {{ $category ? $category->name : 'nessuna' }}
     </p>
     <p>
         {{ $post->content }}

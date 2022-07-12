@@ -19,7 +19,7 @@ class PostsTableSeeder extends Seeder
             $post->title = $faker->sentence();
             $post->content = $faker->paragraph(rand(10, 30), false);
             // Genero slug
-            $post->slug = Str::slug($post->title, '-');
+            $post->slug = Post::generateSlug($post->title);
             // Salvo
             $post->save();
         }
