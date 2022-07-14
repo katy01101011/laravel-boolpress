@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -67,11 +68,15 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        $now = new Carbon();
         $post = Post::findOrFail($id);
 
         $category = $post->category;
 
-        return view('admin.posts.show', compact('post', 'category'));
+        $now = Carbon::now();
+        $updated_mins_ago = $post->updated_at->diffInMinutes($now);
+
+        return view('admin.posts.show', compact('post', 'category', 'updated_mins_ago'));
     }
 
     /**

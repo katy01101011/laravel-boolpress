@@ -5,6 +5,20 @@
         {{ $post->title }}
     </h1>
     <p>
+        <strong>Creato il </strong>{{ $post->created_at->format('d F Y')  }} alle ore {{ $post->created_at->format('H:m')  }}
+    </p>
+
+    @if ($post->created_at == $post->updated_at)
+        <p>
+            Il post non è mai stato modificato
+        </p>
+    @else
+        <p v-if='$post->created_at == $post->updated_at'>
+            <strong>Modificato </strong>{{ $updated_mins_ago < 60 ? $updated_mins_ago . ' minuti fa' : 'il ' . $post->updated_at->format('d F Y')  }}{{ $updated_mins_ago > 60 ? ' alle ore ' . $post->updated_at->format('H:m') : '' }}
+        </p>
+    @endif
+
+    <p>
         <strong>Slug:</strong> {{ $post->slug }}
     </p>
     <p>
