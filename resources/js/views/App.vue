@@ -1,18 +1,19 @@
 <template>
   <div>
-    <h1>
-        Ciao! Sono la pagina di frontoffice
-    </h1>
-    <WorkInProgress />
+    <AppHeader />
+    <AllPosts />
   </div>
 </template>
 
 <script>
-import WorkInProgress from '../components/WorkInProgress.vue';
+import AppHeader from '../components/AppHeader.vue';
+import AllPosts from '../components/AllPosts.vue'
+
 export default {
     name: 'App',
     components: {
-        WorkInProgress,
+        AllPosts,
+        AppHeader,
     },
 }
 </script>
